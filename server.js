@@ -1,3 +1,4 @@
+require('dotenv').config();
 // 1. 라이브러리 및 모델 불러오기
 const express = require('express');
 const mongoose = require('mongoose');
@@ -13,7 +14,7 @@ app.set('view engine', 'ejs'); // EJS를 템플릿 엔진으로 설정
 app.use(express.static('public')); // CSS, JS 등 정적 파일을 담을 'public' 폴더 설정
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-  secret: 'my-secret-key', // 세션을 암호화할 키 (실제로는 더 복잡하게 만드세요)
+  secret: process.env.SESSION_SECRET, // .env 파일의 변수 사용
   resave: false,
   saveUninitialized: true,
 }));
@@ -21,12 +22,7 @@ app.use(session({
 // 3. MongoDB 연결
 // 제공해주신 연결 문자열(uri)을 이곳에 붙여넣습니다.
 // <db_password> 부분은 실제 비밀번호로 바꿔주세요.
-const uri = "mongodb+srv://bing0117:bb123456@cluster0.wjsuq.mongodb.net/homeworkDB?retryWrites=true&w=majority&appName=Cluster0";
-mongoose.connect(uri, {
-  // Mongoose 6.x 버전부터는 아래 옵션들이 기본값이라 명시할 필요가 없습니다.
-  // useNewUrlParser: true, 
-  // useUnifiedTopology: true 
-})
+mongoose.connect(process.env.MONGO_URI) // .env 파일의 변수 사용
   .then(() => console.log('MongoDB 연결 성공!'))
   .catch(err => console.log(err));
 

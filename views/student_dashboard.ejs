@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이번 주 숙제</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- user 변수가 존재하는지 먼저 확인하는 코드를 추가하면 더 안정적입니다. -->
+    <% if (typeof user !== 'undefined') { %>
+        <div class="container">
+            <a href="/logout" class="logout-btn">로그아웃</a>
+            <h1><%= user.username %> 학생의 이번 주 숙제</h1>
+            <div class="homework-box">
+                <!-- user.homework가 null이나 undefined일 경우를 대비 -->
+                <p><%= user.homework || '숙제가 없습니다.' %></p>
+            </div>
+        </div>
+    <% } else { %>
+        <!-- 이 메시지가 보인다면, 서버에서 user 변수를 전달하지 않은 것입니다. -->
+        <h1>오류: 사용자 정보를 불러올 수 없습니다.</h1>
+    <% } %>
+</body>
+</html>
